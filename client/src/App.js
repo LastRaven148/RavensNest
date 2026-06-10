@@ -21,6 +21,7 @@ import useDialogs
 from "./hooks/useDialogs";
 import useChat
 from "./hooks/useChat";
+import useToast from "./hooks/useToast";
 
 export default function App() {
 
@@ -34,58 +35,17 @@ export default function App() {
   
   const [unread, setUnread] = useState({});
   const [
-  profileUser,
-  setProfileUser
-] = useState(null);
+  profileUser, setProfileUser] = useState(null);
 
-  const [
-  settingsOpen,
-  setSettingsOpen
-] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const [
+const {
   toast,
-  setToast
-] = useState("");
+  showToast
+} = useToast();
 
   const socketRef = useRef(null);
   const bottomRef = useRef(null);
-  const toastTimeoutRef = useRef(null);
-
-function showToast(message) {
-
-  if (toastTimeoutRef.current) {
-    clearTimeout(
-      toastTimeoutRef.current
-    );
-  }
-
-  setToast(message);
-
-  toastTimeoutRef.current =
-    setTimeout(() => {
-
-      setToast("");
-
-    }, 3000);
-
-}
-
-useEffect(() => {
-
-  return () => {
-
-    if (toastTimeoutRef.current) {
-
-      clearTimeout(
-        toastTimeoutRef.current
-      );
-
-    }
-
-  };
-
-}, []);
 
 const {
   username,

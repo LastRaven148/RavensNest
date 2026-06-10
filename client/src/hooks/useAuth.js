@@ -61,24 +61,24 @@ useEffect(() => {
 
   async function login() {
 
-    try {
+  try {
 
-      const data =
-        await loginUser(
-          username,
-          password
-        );
+    const data =
+      await loginUser(
+        username,
+        password
+      );
 
-      if (!data.token) {
+    if (!data.token) {
 
-        showToast(
-          data.error ||
-          "Login error"
-        );
+      showToast(
+        data.error ||
+        "Login error"
+      );
 
-        return false;
+      return false;
 
-      }
+    }
 
       localStorage.setItem(
         "token",
