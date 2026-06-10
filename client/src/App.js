@@ -91,10 +91,7 @@ const chat = useChat({
   chats,
   dialogs
 });
-console.log(
-  "updateDialog",
-  updateDialog
-);
+
 useEffect(() => {
 
   function handleEsc(e) {
@@ -144,21 +141,17 @@ useEffect(() => {
   socketRef,
   API
 });
+
 useEffect(() => {
 
-  if (!username) {
+  if (!token || !username) {
     return;
   }
 
-  loadDialogs(
-    username
-  );
+  loadDialogs(username);
+  loadProfile(username);
 
-  loadProfile(
-    username
-  );
-
-}, [username]);
+}, [token, username]);
 
   useEffect(() => {
   bottomRef.current?.scrollIntoView({
