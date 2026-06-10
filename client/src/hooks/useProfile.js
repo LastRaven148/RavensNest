@@ -4,10 +4,6 @@ import {
   updateBioApi
 }
 from "../services/api";
-import {
-  SOCKET_EVENTS
-}
-from "../constants/socketEvents";
 
 export default function useProfile({
   username,

@@ -28,11 +28,6 @@ export default function useSocket({
 
     if (!token) return;
 
-    console.log(
-  "SOCKET CREATE",
-  token
-);
-
 const socket = io(API, {
   auth: {
     token
@@ -40,10 +35,7 @@ const socket = io(API, {
 });
 
 socket.on("connect", () => {
-  console.log(
-    "SOCKET CONNECTED",
-    socket.id
-  );
+
 });
 
 socket.on("connect_error", err => {
@@ -60,12 +52,6 @@ console.count(
     socket.on(
   "newMessage",
   (msg) => {
-
-    console.log(
-      "NEW_MESSAGE_EVENT"
-    );
-
-    console.log(msg);
 
         const chatId = msg.chatId;
 

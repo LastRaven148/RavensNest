@@ -1,4 +1,7 @@
-import { useState } from "react";
+import {
+  useState,
+  useCallback
+} from "react";
 
 import {
   getDialogs
@@ -37,53 +40,40 @@ export default function useDialogs() {
 
   }
 
-  function updateDialog(
-  msg,
-  currentUser
-) {
+const updateDialog =
+  useCallback((msg) => {
 
-  setDialogs(prev => {
+    setDialogs(prev => {
 
-      const dialogUser =
-      msg.from === currentUser
-        ? msg.to
-        : msg.from;
+      const username =
+        msg.from;
 
-    const existing =
-      prev.find(
-        dialog =>
-          dialog.username === dialogUser
-      );
+      const existing =
+        prev.find(
+          dialog =>
+            dialog.username === username
+        );
 
       if (!existing) {
-
-      return [
-        {
-          username: dialogUser,
-          lastMessage: msg.text,
-          online: false
-        },
-        ...prev
-      ];
-
-    }
+        return prev;
+      }
 
       const updated = {
-      ...existing,
-      lastMessage: msg.text
-    };
+        ...existing,
+        lastMessage: msg.text
+      };
 
       return [
-      updated,
-      ...prev.filter(
-        dialog =>
-          dialog.username !== dialogUser
-      )
-    ];
+        updated,
+        ...prev.filter(
+          dialog =>
+            dialog.username !== username
+        )
+      ];
 
-  });
+    });
 
-}
+  }, []);
 
   const filteredDialogs =
     dialogs.filter(dialog =>

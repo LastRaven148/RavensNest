@@ -131,7 +131,10 @@ const chat = useChat({
   chats,
   dialogs
 });
-
+console.log(
+  "updateDialog",
+  updateDialog
+);
 useEffect(() => {
 
   function handleEsc(e) {

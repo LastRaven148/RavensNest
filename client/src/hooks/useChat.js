@@ -21,38 +21,42 @@ export default function useChat({
 
   function openChat(user) {
 
-    setActiveChat(user);
-
-    setUnread(prev => ({
-      ...prev,
-      [user]: 0
-    }));
-
-    const socket =
-      socketRef.current;
-
-    if (!socket) return;
-
-    const chatId =
-      getChatId(
-        username,
-        user
-      );
-
-    socket.emit(
-      SOCKET_EVENTS.JOIN_CHAT,
-      chatId
-    );
-
-    socket.emit(
-      SOCKET_EVENTS.GET_CHAT,
-      {
-        user1: username,
-        user2: user
-      }
-    );
-
+  if (activeChat === user) {
+    return;
   }
+
+  setActiveChat(user);
+
+  setUnread(prev => ({
+    ...prev,
+    [user]: 0
+  }));
+
+  const socket =
+    socketRef.current;
+
+  if (!socket) return;
+
+  const chatId =
+    getChatId(
+      username,
+      user
+    );
+
+  socket.emit(
+    SOCKET_EVENTS.JOIN_CHAT,
+    chatId
+  );
+
+  socket.emit(
+    SOCKET_EVENTS.GET_CHAT,
+    {
+      user1: username,
+      user2: user
+    }
+  );
+
+}
 
   function sendMessage() {
 

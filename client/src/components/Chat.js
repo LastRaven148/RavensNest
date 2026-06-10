@@ -22,7 +22,7 @@ const Chat = memo(function Chat({
   openProfile,
   closeChat
 }) {
-console.count("CHAT_RENDER");
+
   return (
     <div className="chat">
 
