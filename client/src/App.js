@@ -114,7 +114,6 @@ useEsc(
   setChats,
   setUnread,
   setOnlineUsers,
-  getChatId,
   updateDialog,
   socketRef,
   API

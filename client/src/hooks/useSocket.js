@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
 import io from "socket.io-client";
+import {
+  addMessageToChat,
+  incrementUnread
+} from "../utils/chatState";
 
 export default function useSocket({
   token,
@@ -8,7 +12,6 @@ export default function useSocket({
   setChats,
   setUnread,
   setOnlineUsers,
-  getChatId,
   updateDialog,
   socketRef,
   API
@@ -34,10 +37,6 @@ const socket = io(API, {
   }
 });
 
-socket.on("connect", () => {
-
-});
-
 socket.on("connect_error", err => {
   console.log(
     "SOCKET ERROR",
@@ -46,38 +45,31 @@ socket.on("connect_error", err => {
 });
 
     socketRef.current = socket;
-console.count(
-  "NEW_MESSAGE_SUBSCRIBE"
-);
+
     socket.on(
   "newMessage",
   (msg) => {
 
-        const chatId = msg.chatId;
-
-        setChats(prev => ({
-          ...prev,
-          [chatId]: [
-            ...(prev[chatId] || []),
-            msg
-          ]
-        }));
+        setChats(prev =>
+  addMessageToChat(
+    prev,
+    msg
+  )
+);
 
         if (
   msg.from !== username &&
   activeChatRef.current !== msg.from
 ) {
-          setUnread(prev => ({
-            ...prev,
-            [msg.from]:
-              (prev[msg.from] || 0) + 1
-          }));
+          setUnread(prev =>
+  incrementUnread(
+    prev,
+    msg
+  )
+);
         }
 
-        updateDialog(
-  msg,
-  username
-);
+        updateDialog(msg);
       }
     );
 

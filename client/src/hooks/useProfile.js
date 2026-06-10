@@ -30,7 +30,7 @@ export default function useProfile({
 
     } catch (err) {
       console.error(err);
-      showToast("Failed to load profile.", "error");
+      showToast("Failed to load profile.");
     }
   }
 
@@ -59,7 +59,7 @@ export default function useProfile({
 
     } catch (err) {
       console.error(err);
-      showToast("Failed to upload avatar.", "error");
+      showToast("Failed to upload avatar.");
     }
   }
 
@@ -79,7 +79,7 @@ async function saveBio(
   } catch (err) {
 
     console.error(err);
-    showToast("Failed to save bio.", "error");
+    showToast("Failed to save bio.");
 
   }
 
