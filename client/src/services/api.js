@@ -7,9 +7,10 @@ export async function getUsers() {
   return res.json();
 }
 
-export async function getDialogs(
-  username
-) {
+export async function getDialogs(username) {
+
+  console.trace("GET DIALOGS");
+
   const res =
     await fetch(
       `${API}/dialogs/${username}`

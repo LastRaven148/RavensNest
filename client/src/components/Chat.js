@@ -4,7 +4,11 @@ from "./Message";
 import ChatHeader
 from "./ChatHeader";
 
-export default function Chat({
+import {
+  memo
+} from "react";
+
+const Chat = memo(function Chat({
   activeChat,
   activeDialog,
   onlineUsers,
@@ -18,29 +22,30 @@ export default function Chat({
   openProfile,
   closeChat
 }) {
-
+console.count("CHAT_RENDER");
   return (
     <div className="chat">
 
       {activeChat ? (
         <>
           <ChatHeader
-  activeChat={activeChat}
-  activeDialog={activeDialog}
-  onlineUsers={onlineUsers}
-  openProfile={openProfile}
-/>
+            activeChat={activeChat}
+            activeDialog={activeDialog}
+            onlineUsers={onlineUsers}
+            openProfile={openProfile}
+          />
+
           <div className="messages">
 
             {messages.map((m) => (
 
-  <Message
-    key={m._id}
-    message={m}
-    username={username}
-  />
+              <Message
+                key={m._id}
+                message={m}
+                username={username}
+              />
 
-))}
+            ))}
 
             <div ref={bottomRef} />
 
@@ -65,7 +70,7 @@ export default function Chat({
 
           </div>
         </>
-      ) : (
+            ) : (
         <div className="empty">
           Select a chat
         </div>
@@ -73,4 +78,7 @@ export default function Chat({
 
     </div>
   );
-}
+
+});
+
+export default Chat;

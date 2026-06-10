@@ -1,11 +1,17 @@
+import { memo } from "react";
+
 import { formatTime }
 from "../utils/date";
 
-export default function Message({
+function Message({
   message,
   username
 }) {
-
+console.log(
+  "MESSAGE",
+  message._id,
+  message.text
+);
   return (
     <div
       className={
@@ -25,4 +31,7 @@ export default function Message({
       </div>
     </div>
   );
+
 }
+
+export default memo(Message);

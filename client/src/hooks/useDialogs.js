@@ -2,8 +2,7 @@ import { useState } from "react";
 
 import {
   getDialogs
-}
-from "../services/api";
+} from "../services/api";
 
 export default function useDialogs() {
 
@@ -38,6 +37,54 @@ export default function useDialogs() {
 
   }
 
+  function updateDialog(
+  msg,
+  currentUser
+) {
+
+  setDialogs(prev => {
+
+      const dialogUser =
+      msg.from === currentUser
+        ? msg.to
+        : msg.from;
+
+    const existing =
+      prev.find(
+        dialog =>
+          dialog.username === dialogUser
+      );
+
+      if (!existing) {
+
+      return [
+        {
+          username: dialogUser,
+          lastMessage: msg.text,
+          online: false
+        },
+        ...prev
+      ];
+
+    }
+
+      const updated = {
+      ...existing,
+      lastMessage: msg.text
+    };
+
+      return [
+      updated,
+      ...prev.filter(
+        dialog =>
+          dialog.username !== dialogUser
+      )
+    ];
+
+  });
+
+}
+
   const filteredDialogs =
     dialogs.filter(dialog =>
       dialog.username
@@ -55,6 +102,7 @@ export default function useDialogs() {
     setSearch,
 
     loadDialogs,
+    updateDialog,
 
     filteredDialogs
 

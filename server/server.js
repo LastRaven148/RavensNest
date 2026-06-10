@@ -395,10 +395,13 @@ io.on("connection", (socket) => {
 
   console.log("CONNECTED:", username);
 
-  online.set(
-    username,
-    socket.id
-  );
+  if (!online.has(username)) {
+  online.set(username, new Set());
+}
+
+online
+  .get(username)
+  .add(socket.id);
 
   io.emit(
     "onlineUsers",
@@ -473,13 +476,25 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
 
-    online.delete(username);
+  const sockets =
+    online.get(username);
 
-    io.emit(
-      "onlineUsers",
-      [...online.keys()]
-    );
-  });
+  if (sockets) {
+
+    sockets.delete(socket.id);
+
+    if (sockets.size === 0) {
+      online.delete(username);
+    }
+
+  }
+
+  io.emit(
+    "onlineUsers",
+    [...online.keys()]
+  );
+
+});
 });
 
 server.listen(3001, () => {

@@ -116,16 +116,12 @@ const {
 });
 
 const {
-
   dialogs,
-
   search,
   setSearch,
-
   loadDialogs,
-
+  updateDialog,
   filteredDialogs
-
 } = useDialogs();
 
 const chat = useChat({
@@ -181,11 +177,10 @@ useEffect(() => {
   setUnread,
   setOnlineUsers,
   getChatId,
-  loadDialogs,
+  updateDialog,
   socketRef,
   API
 });
-
 useEffect(() => {
 
   if (!username) {

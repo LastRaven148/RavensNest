@@ -9,7 +9,7 @@ export default function useSocket({
   setUnread,
   setOnlineUsers,
   getChatId,
-  loadDialogs,
+  updateDialog,
   socketRef,
   API
 }) {
@@ -54,10 +54,18 @@ socket.on("connect_error", err => {
 });
 
     socketRef.current = socket;
-
+console.count(
+  "NEW_MESSAGE_SUBSCRIBE"
+);
     socket.on(
   "newMessage",
   (msg) => {
+
+    console.log(
+      "NEW_MESSAGE_EVENT"
+    );
+
+    console.log(msg);
 
         const chatId = msg.chatId;
 
@@ -80,7 +88,10 @@ socket.on("connect_error", err => {
           }));
         }
 
-        loadDialogs(username);
+        updateDialog(
+  msg,
+  username
+);
       }
     );
 

@@ -192,20 +192,24 @@ useOutsideClick(
 
           </div>
 
-          <div className="dialog-time">
-            {new Date(
-              dialog.createdAt
-            ).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit"
-            })}
-          </div>
+          <div className="dialog-meta">
 
-          {unread[dialog.username] > 0 && (
-            <div className="unread">
-              {unread[dialog.username]}
-            </div>
-          )}
+  <div className="dialog-time">
+    {new Date(
+      dialog.createdAt
+    ).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    })}
+  </div>
+
+  {unread[dialog.username] > 0 && (
+    <div className="unread">
+      {unread[dialog.username]}
+    </div>
+  )}
+
+</div>
 
         </div>
 

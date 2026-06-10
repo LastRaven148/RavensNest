@@ -1,4 +1,7 @@
-import { useState } from "react";
+import {
+  useState,
+  useMemo
+} from "react";
 import { getChatId } from "../utils/chat";
 import { SOCKET_EVENTS } from "../constants/socketEvents";
 
@@ -89,8 +92,16 @@ const chatId =
     : null;
 
 const messages =
-  chats[chatId] || [];
+  useMemo(() => {
 
+    return (
+      chats[chatId] || []
+    );
+
+  }, [
+    chats,
+    chatId
+  ]);
   const activeDialog =
   dialogs?.find(
     d =>
