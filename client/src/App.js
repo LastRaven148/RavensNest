@@ -23,6 +23,8 @@ import useChat
 from "./hooks/useChat";
 import useToast from "./hooks/useToast";
 import useUI from "./hooks/useUI";
+import LoginPage
+from "./components/LoginPage";
 
 export default function App() {
 
@@ -159,43 +161,22 @@ useEffect(() => {
 
 }, [token, username]);
 
-  if (!token) {
-    return (
-      <div className="login-page">
-        <div className="login-box">
-          <h1>RavensNest</h1>
+if (!token) {
 
-          <input
-            placeholder="Username"
-            value={username}
-            onChange={(e) =>
-              setUsername(e.target.value)
-            }
-          />
+  return (
 
-          <input
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-          />
+    <LoginPage
+      username={username}
+      setUsername={setUsername}
+      password={password}
+      setPassword={setPassword}
+      login={login}
+      register={register}
+    />
 
-          <button onClick={login}>
-            Login
-          </button>
+  );
 
-          <button
-            className="secondary"
-            onClick={register}
-          >
-            Register
-          </button>
-        </div>
-      </div>
-    );
-  }
+}
 
   return (
   <div className="app">
