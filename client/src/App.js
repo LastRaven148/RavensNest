@@ -22,10 +22,21 @@ from "./hooks/useDialogs";
 import useChat
 from "./hooks/useChat";
 import useToast from "./hooks/useToast";
+import useUI from "./hooks/useUI";
 
 export default function App() {
 
-  const [profileMenu, setProfileMenu] = useState(false);
+  const {
+  profileMenu,
+  setProfileMenu,
+
+  profileUser,
+  setProfileUser,
+
+  settingsOpen,
+  setSettingsOpen
+
+} = useUI();
   const [avatar, setAvatar] = useState("");
   const [bio, setBio] = useState("");
   const fileInputRef = useRef(null);
@@ -34,10 +45,6 @@ export default function App() {
   const [onlineUsers, setOnlineUsers] = useState([]);
   
   const [unread, setUnread] = useState({});
-  const [
-  profileUser, setProfileUser] = useState(null);
-
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
 const {
   toast,
