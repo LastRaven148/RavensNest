@@ -25,6 +25,7 @@ import useToast from "./hooks/useToast";
 import useUI from "./hooks/useUI";
 import LoginPage
 from "./components/LoginPage";
+import useEsc from "./hooks/useEsc";
 
 export default function App() {
 
@@ -99,43 +100,12 @@ const chat = useChat({
   chats,
   dialogs
 });
-
-useEffect(() => {
-
-  function handleEsc(e) {
-
-    if (e.key !== "Escape") {
-      return;
-    }
-
-    if (profileMenu) {
-      setProfileMenu(false);
-      return;
-    }
-
-    if (chat.activeChat) {
-  chat.setActiveChat(null);
-  return;
-}
-
-  }
-
-  window.addEventListener(
-    "keydown",
-    handleEsc
-  );
-
-  return () => {
-    window.removeEventListener(
-      "keydown",
-      handleEsc
-    );
-  };
-
-}, [
+useEsc(
   profileMenu,
-  chat.activeChat
-]);
+  setProfileMenu,
+  chat.activeChat,
+  chat.setActiveChat
+);
 
   useSocket({
   token,
