@@ -45,7 +45,6 @@ const {
 } = useToast();
 
   const socketRef = useRef(null);
-  const bottomRef = useRef(null);
 
 const {
   username,
@@ -153,12 +152,6 @@ useEffect(() => {
 
 }, [token, username]);
 
-  useEffect(() => {
-  bottomRef.current?.scrollIntoView({
-    behavior: "smooth"
-  });
-}, [chats]);
-
   if (!token) {
     return (
       <div className="login-page">
@@ -231,7 +224,6 @@ openSettings={() =>
   onlineUsers={onlineUsers}
   messages={chat.messages}
   username={username}
-  bottomRef={bottomRef}
   text={chat.text}
   setText={chat.setText}
   handleKey={chat.handleKey}

@@ -5,7 +5,9 @@ import ChatHeader
 from "./ChatHeader";
 
 import {
-  memo
+  memo,
+  useEffect,
+  useRef
 } from "react";
 
 const Chat = memo(function Chat({
@@ -14,7 +16,6 @@ const Chat = memo(function Chat({
   onlineUsers,
   messages,
   username,
-  bottomRef,
   text,
   setText,
   handleKey,
@@ -22,6 +23,14 @@ const Chat = memo(function Chat({
   openProfile,
   closeChat
 }) {
+
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth"
+    });
+  }, [messages]);
 
   return (
     <div className="chat">
