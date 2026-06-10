@@ -25,13 +25,46 @@ const Chat = memo(function Chat({
 }) {
 
   const bottomRef = useRef(null);
+const textareaRef = useRef(null);
+const messagesRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({
-      behavior: "smooth"
-    });
-  }, [messages]);
 
+  if (
+    !messages.length ||
+    !messagesRef.current
+  ) {
+    return;
+  }
+
+  messagesRef.current.scrollTop =
+    messagesRef.current.scrollHeight;
+
+}, [messages]);
+
+useEffect(() => {
+
+  if (
+    text === "" &&
+    textareaRef.current
+  ) {
+
+    textareaRef.current.style.height =
+      "48px";
+
+  }
+
+}, [text]);
+if (
+  activeChat &&
+  messages.length === 0
+) {
+  return (
+    <div className="chat">
+      Loading...
+    </div>
+  );
+}
   return (
     <div className="chat">
 
@@ -44,8 +77,11 @@ const Chat = memo(function Chat({
             openProfile={openProfile}
           />
 
-          <div className="messages">
-
+          <div
+  className="messages"
+  ref={messagesRef}
+>
+          
             {messages.map((m) => (
 
               <Message
@@ -62,21 +98,31 @@ const Chat = memo(function Chat({
 
           <div className="composer">
 
-            <input
-              value={text}
-              onChange={(e) =>
-                setText(e.target.value)
-              }
-              onKeyDown={handleKey}
-              placeholder="Message..."
-            />
+            <textarea
+  ref={textareaRef}
+  value={text}
+  onChange={(e) => {
 
-            <button
-              onClick={sendMessage}
-            >
-              Send
-            </button>
+    setText(
+      e.target.value
+    );
 
+    e.target.style.height = "auto";
+
+const newHeight =
+  Math.min(
+    e.target.scrollHeight,
+    160
+  );
+
+e.target.style.height =
+  `${newHeight}px`;
+
+  }}
+  onKeyDown={handleKey}
+  placeholder="Message..."
+  rows={1}
+/>
           </div>
         </>
             ) : (

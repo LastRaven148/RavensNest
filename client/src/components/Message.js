@@ -7,11 +7,7 @@ function Message({
   message,
   username
 }) {
-console.log(
-  "MESSAGE",
-  message._id,
-  message.text
-);
+
   return (
     <div
       className={

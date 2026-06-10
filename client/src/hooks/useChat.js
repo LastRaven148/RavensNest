@@ -26,7 +26,10 @@ export default function useChat({
   }
 
   setActiveChat(user);
-
+console.log(
+  "OPEN_CHAT",
+  user
+);
   setUnread(prev => ({
     ...prev,
     [user]: 0
@@ -56,16 +59,16 @@ export default function useChat({
     }
   );
 
-}
+  }
 
   function sendMessage() {
-
-    if (!socketRef.current) return;
-
-    if (!activeChat) return;
-
-    if (!text.trim()) return;
-
+if (
+  !socketRef.current ||
+  !activeChat ||
+  !text.trim()
+) {
+  return;
+}
     socketRef.current.emit(
       SOCKET_EVENTS.SEND_MESSAGE,
       {
@@ -81,11 +84,18 @@ export default function useChat({
 
   function handleKey(e) {
 
-    if (e.key === "Enter") {
-      sendMessage();
-    }
+  if (
+    e.key === "Enter" &&
+    !e.shiftKey
+  ) {
+
+    e.preventDefault();
+
+    sendMessage();
 
   }
+
+}
 
 const chatId =
   activeChat
@@ -107,10 +117,17 @@ const messages =
     chatId
   ]);
   const activeDialog =
-  dialogs?.find(
-    d =>
-      d.username === activeChat
-  );
+  useMemo(() => {
+
+    return dialogs?.find(
+      d =>
+        d.username === activeChat
+    );
+
+  }, [
+    dialogs,
+    activeChat
+  ]);
 
   return {
 
